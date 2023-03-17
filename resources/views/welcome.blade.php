@@ -6,7 +6,13 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Nama Club</th>
+                <th>Nama Klub</th>
+                <th>P</th>
+                <th>Me</th>
+                <th>S</th>
+                <th>K</th>
+                <th>GM</th>
+                <th>GK</th>
             </tr>
         </thead>
         <tbody>
@@ -28,8 +34,14 @@
                 serverSide: true,
                 ajax: "{{ route('standings') }}",
                 columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'name', name: 'name' },
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                    { data: 'club.name', name: 'club.name' },
+                    { data: 'points', name: 'points' },
+                    { data: 'wins', name: 'wins' },
+                    { data: 'draws', name: 'draws' },
+                    { data: 'losses', name: 'losses' },
+                    { data: 'goals_for', name: 'goals_for' },
+                    { data: 'goals_against', name: 'goals_against' },
                 ]
             });
         });

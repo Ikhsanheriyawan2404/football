@@ -10,4 +10,14 @@ class Game extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function home()
+    {
+        return $this->belongsTo(Club::class, 'home_club_id');
+    }
+
+    public function away()
+    {
+        return $this->belongsTo(Club::class, 'away_club_id');
+    }
 }
