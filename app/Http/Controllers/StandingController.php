@@ -10,9 +10,15 @@ class StandingController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $standingg = Standing::with('club')->get();
-            return DataTables::of($standingg)
+            $standing = Standing::with('club')->get();
+            return DataTables::of($standing)
                 ->addIndexColumn()
+                ->editColumn('selisih_goal', function (Standing $standing) {
+                    return $standing->goals_for - $standing->goals_againts;
+                })
+                ->editColumn('plays', function (Standing $standing) {
+                    return $standing->awayGames->count() + $standing->homeGames->count();
+                })
                 ->make(true);
         }
 

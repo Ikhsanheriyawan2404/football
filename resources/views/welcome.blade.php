@@ -7,12 +7,14 @@
             <tr>
                 <th>No</th>
                 <th>Nama Klub</th>
-                <th>P</th>
+                <th>Ma</th>
                 <th>Me</th>
                 <th>S</th>
                 <th>K</th>
                 <th>GM</th>
                 <th>GK</th>
+                <th>Selisih Goal</th>
+                <th>P</th>
             </tr>
         </thead>
         <tbody>
@@ -36,12 +38,14 @@
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                     { data: 'club.name', name: 'club.name' },
-                    { data: 'points', name: 'points' },
+                    { data: 'plays', name: 'plays' },
                     { data: 'wins', name: 'wins' },
                     { data: 'draws', name: 'draws' },
                     { data: 'losses', name: 'losses' },
                     { data: 'goals_for', name: 'goals_for' },
                     { data: 'goals_against', name: 'goals_against' },
+                    { data: 'selisih_goal', name: 'selisih_goal' },
+                    { data: 'points', name: 'points' },
                 ]
             });
         });

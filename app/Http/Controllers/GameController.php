@@ -63,9 +63,20 @@ class GameController extends Controller
                         'away_score' => request('away_score')[$i],
                     ];
 
+                    if ($data['home_club_id'] == $data['away_club_id']) {
+                        throw new \Exception('Klub Tidak Boleh Sama');
+                    }
+
+                    $existingGame = Game::where('home_club_id', $data['home_club_id'])
+                    ->where('away_club_id', $data['away_club_id'])->first();
+
+                    if ($existingGame) {
+                        throw new \Exception('Pertandingag sudah ada');
+                    }
+
                     $game = Game::create($data);
 
-                    $homeClub = Standing::find($game->home_club_id);
+                    $homeClub = Standing::where('club_id', $game->home_club_id)->first();
 
                     if ($game->home_score > $game->away_score) {
                         $homeClub->increment('points', $this->winPoints);
@@ -73,12 +84,14 @@ class GameController extends Controller
                     } elseif ($game->home_score == $game->away_score) {
                         $homeClub->increment('points', $this->drawPoints);
                         $homeClub->increment('draws');
+                    } else {
+                        $homeClub->increment('losses');
                     }
 
                     $homeClub->increment('goals_for', $game->home_score);
                     $homeClub->increment('goals_against', $game->away_score);
 
-                    $awayClub = Standing::find($game->away_club_id);
+                    $awayClub = Standing::where('club_id', $game->away_club_id)->first();
 
                     if ($game->away_score > $game->home_score) {
                         $awayClub->increment('points', $this->winPoints);
@@ -86,6 +99,8 @@ class GameController extends Controller
                     } elseif ($game->away_score == $game->home_score) {
                         $awayClub->increment('points', $this->drawPoints);
                         $awayClub->increment('draws');
+                    } else {
+                        $awayClub->increment('losses');
                     }
 
                     $awayClub->increment('goals_for', $game->away_score);
